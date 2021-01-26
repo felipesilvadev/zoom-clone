@@ -19,6 +19,16 @@ const onload = () => {
   const socketUrl = 'http://localhost:3000';
   const socketBuilder = new SocketBuilder({ socketUrl });
 
+  const peerConfig = Object.values({
+    id: undefined,
+    config: {
+      port: 9000,
+      host: 'localhost',
+      path: '/'
+    }
+  });
+  const peerBuilder = new PeerBuilder({ peerConfig });
+
   const view = new View();
   const media = new Media();
   
@@ -26,7 +36,8 @@ const onload = () => {
     view,
     media,
     room,
-    socketBuilder
+    socketBuilder,
+    peerBuilder
   };
 
   Business.initialize(deps);
