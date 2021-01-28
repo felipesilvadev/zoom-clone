@@ -66,4 +66,30 @@ class Recorder {
     this.completeRecordings.push([...this.recordedBlobs]);
     this.recordedBlobs = [];
   }
+
+  getAllVideosURLs() {
+    return this.completeRecordings.map(recording => {
+      const supperBuffer = new Blob(recording, { type: this.videoType });
+
+      return window.URL.createObjectURL(supperBuffer);
+    });
+  }
+
+
+  download() {
+    if (!this.completeRecordings.length) return;
+
+    for (const recording of this.completeRecordings) {
+      const blob = new Blob(recording, { type: this.videoType });
+      const url = window.URL.createObjectURL(blob);
+      
+      const linkButton = document.createElement('a');
+      linkButton.style.display = 'none';
+      linkButton.href = url;
+      linkButton.download = `${this.filename}.webm`;
+
+      document.body.appendChild(linkButton);
+      linkButton.click();
+    }
+  }
 }
